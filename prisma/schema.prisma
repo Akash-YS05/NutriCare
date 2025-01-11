@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String?
+  password      String
+  role          Role
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  contactInfo   String
+  deliveryStaff DeliveryStaff?
+  pantryStaff   PantryStaff?
+}
+
+model Patient {
+  id               String         @id @default(cuid())
+  name             String
+  contactInfo      String
+  age              Int
+  gender           Gender
+  floorNumber      String
+  roomNumber       String
+  bedNumber        String
+  emergencyContact String
+  diseases         String[]
+  allergies        String[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  dietCharts       DietChart[]
+  mealDeliveries   MealDelivery[]
+}
+
+model DietChart {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  patientId String
+  startDate DateTime
+  endDate   DateTime?
+  patient   Patient    @relation(fields: [patientId], references: [id])
+  mealPlans MealPlan[]
+}
+
+model MealPlan {
+  id             String         @id @default(cuid())
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  dietChartId    String
+  mealType       MealType
+  ingredients    String[]
+  instructions   String[]
+  mealDeliveries MealDelivery[]
+  dietChart      DietChart      @relation(fields: [dietChartId], references: [id])
+}
+
+model PantryStaff {
+  id               String         @id @default(cuid())
+  userId           String         @unique
+  location         String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  mealPreparations MealDelivery[] @relation("PreparedBy")
+  user             User           @relation(fields: [userId], references: [id])
+}
+
+model DeliveryStaff {
+  id             String         @id @default(cuid())
+  userId         String         @unique
+  location       String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  user           User           @relation(fields: [userId], references: [id])
+  mealDeliveries MealDelivery[] @relation("DeliveredBy")
+}
+
+model MealDelivery {
+  id            String         @id @default(uuid())
+  patientId     String
+  mealPlanId    String
+  preparedById  String
+  deliveredById String
+  status        DeliveryStatus @default(PENDING)
+  scheduledFor  DateTime
+  preparedAt    DateTime?
+  deliveredAt   DateTime?
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  deliveredBy   DeliveryStaff  @relation("DeliveredBy", fields: [deliveredById], references: [id])
+  mealPlan      MealPlan       @relation(fields: [mealPlanId], references: [id])
+  patient       Patient        @relation(fields: [patientId], references: [id])
+  preparedBy    PantryStaff    @relation("PreparedBy", fields: [preparedById], references: [id])
+}
+
+enum Role {
+  MANAGER
+  PANTRY_STAFF
+  DELIVERY_STAFF
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum MealType {
+  MORNING
+  EVENING
+  NIGHT
+}
+
+enum DeliveryStatus {
+  PENDING
+  PREPARING
+  READY
+  IN_DELIVERY
+  DELIVERED
+  CANCELLED
+}
