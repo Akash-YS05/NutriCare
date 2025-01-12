@@ -180,6 +180,106 @@ const dietChart3 = await prisma.dietChart.create({
   }
 });
 
+const mealPlan = await prisma.mealPlan.findFirst({
+  where: {
+    dietChart: {
+      patient: {
+        id: patient1.id, 
+      }
+    },
+  },
+});
+
+if (!mealPlan) {
+  throw new Error('Meal plan not found for the specified patient.');
+}
+
+const mealPlanId = mealPlan.id;
+
+const mealPlan2 = await prisma.mealPlan.findFirst({
+  where: {
+    dietChart: {
+      patient: {
+        id: patient1.id, 
+      }
+    },
+  },
+});
+
+if (!mealPlan2) {
+  throw new Error('Meal plan not found for the specified patient.');
+}
+
+const mealPlanId2 = mealPlan2.id; 
+
+const mealPlan3 = await prisma.mealPlan.findMany({
+  where: {
+    dietChart: {
+      patient: {
+        id: patient3.id, // Replace with the actual patient ID
+      },
+    },
+  },
+  include: {
+    dietChart: {
+      include: {
+        patient: true, // Include patient details
+      },
+    },
+  },
+});
+
+if (!mealPlan3) {
+  throw new Error('Meal plan not found for the specified patient.');
+}
+
+// const mealPlanId3 = mealPlan3.id; 
+
+
+const pantryStaff = await prisma.pantryStaff.findFirst();
+const deliveryStaff = await prisma.deliveryStaff.findFirst();
+// const = await prisma.mealPlan.findFirst();
+
+if (!pantryStaff || !deliveryStaff) {
+  throw new Error('One or more required references are missing.');
+}
+const mealDelivery = await prisma.mealDelivery.create({
+  data: {
+    patientId: patient1.id, 
+    mealPlanId: mealPlanId, 
+    preparedById: pantryStaff.id,
+    deliveredById: deliveryStaff.id,
+    status: 'READY',
+    scheduledFor: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
+});
+const mealDelivery2 = await prisma.mealDelivery.create({
+  data: {
+    patientId: patient2.id, 
+    mealPlanId: mealPlanId, 
+    preparedById: pantryStaff.id,
+    deliveredById: deliveryStaff.id,
+    status: 'READY',
+    scheduledFor: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
+});
+const mealDelivery3 = await prisma.mealDelivery.create({
+  data: {
+    patientId: patient3.id, 
+    mealPlanId: mealPlanId, 
+    preparedById: pantryStaff.id,
+    deliveredById: deliveryStaff.id,
+    status: 'READY',
+    scheduledFor: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
+});
+
 
   console.log('Database seeded successfully');
 }
