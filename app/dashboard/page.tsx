@@ -14,7 +14,7 @@ export default function DashboardPage() {
       <Sidebar />
 
       <div className="flex-1 overflow-y-auto bg-gray-50 p-6">
-        <h1 className="text-3xl font-bold text-gray-900">Hospital Food Manager Dashboard</h1>
+        <h1 className="text-3xl text-center font-bold text-gray-900">Hospital Food Manager Dashboard</h1>
 
         <div className="mt-6 flex items-center space-x-4">
           <div className="flex items-center space-x-2">
@@ -36,7 +36,7 @@ export default function DashboardPage() {
           <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
             <h2 className="text-xl font-semibold text-gray-800">Patients & Diet Charts</h2>
             <p className="mt-2 text-sm text-gray-600">View and manage patient details and diet plans.</p>
-            <Link href="/patients">
+            <Link href="/patients/dashboard">
               <button className="mt-4 text-blue-600 hover:text-blue-800">View Details</button>
             </Link>
           </div>

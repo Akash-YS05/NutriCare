@@ -1,52 +1,28 @@
-import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+// pages/api/patients/route.ts
+import { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
 
-export async function GET() {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-        return new NextResponse(
-            JSON.stringify({ error: "Unauthorized" }),
-            {status: 401}
-        )
-    }
+const prisma = new PrismaClient();
 
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
     try {
-        const patients = await prisma.patient.findMany({
+      // Fetch all patients with their diet charts and meal plans
+      const patients = await prisma.patient.findMany({
+        include: {
+          dietCharts: {
             include: {
-                dietCharts: true
-            }
-        })
-        return NextResponse.json(patients);
-    } catch(err) {
-        return new NextResponse(
-            JSON.stringify({ error: "Internal Server Error" }),
-            {status:500}
-        )
+              mealPlans: true,  // Include meal plans for each diet chart
+            },
+          },
+        },
+      });
+      return res.status(200).json({ patients });
+    } catch (error) {
+      console.error('Error fetching patients:', error);
+      return res.status(500).json({ error: 'Error fetching patients' });
     }
-}
+  }
 
-export async function POST(req: NextRequest) {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-        return new NextResponse(
-            JSON.stringify({ error: "Unauthorized" }),
-            {status: 401}
-        )
-    }
-
-    try {
-        const json = await req.json();
-        const patient = await prisma.patient.create({
-            data: json
-        })
-
-        return NextResponse.json(patient);
-    } catch(err){
-        return new NextResponse(
-            JSON.stringify({ error: 'Internal Server Error' }),
-            { status: 500 }
-        )
-    }
+  return res.status(405).json({ error: 'Method Not Allowed' });
 }

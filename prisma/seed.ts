@@ -102,6 +102,85 @@ async function main() {
     }
   });
 
+  // Create patient 2
+const patient2 = await prisma.patient.create({
+  data: {
+    name: 'Jane Smith',
+    age: 30,
+    gender: 'FEMALE',
+    roomNumber: '102',
+    bedNumber: 'B',
+    floorNumber: '1',
+    contactInfo: '987-654-3210',
+    emergencyContact: '987-654-3211',
+    diseases: ['Asthma'],
+    allergies: ['Dairy'],
+  }
+});
+
+// Create diet chart for patient 2
+const dietChart2 = await prisma.dietChart.create({
+  data: {
+    patientId: patient2.id,
+    startDate: new Date(),
+    endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    mealPlans: {
+      create: [
+        {
+          mealType: 'MORNING',
+          ingredients: ['Whole wheat toast', 'Scrambled eggs', 'Orange juice'],
+          instructions: ['Serve with a side of avocado', 'No butter on toast']
+        },
+        {
+          mealType: 'EVENING',
+          ingredients: ['Salmon', 'Sweet potato', 'Spinach'],
+          instructions: ['Grill the salmon', 'Steam the spinach lightly']
+        }
+      ]
+    }
+  }
+});
+
+// Create patient 3
+const patient3 = await prisma.patient.create({
+  data: {
+    name: 'Michael Brown',
+    age: 50,
+    gender: 'MALE',
+    roomNumber: '201',
+    bedNumber: 'C',
+    floorNumber: '2',
+    contactInfo: '555-123-4567',
+    emergencyContact: '555-123-4568',
+    diseases: ['High blood pressure', 'Arthritis'],
+    allergies: ['Gluten', 'Eggs'],
+  }
+});
+
+// Create diet chart for patient 3
+const dietChart3 = await prisma.dietChart.create({
+  data: {
+    patientId: patient3.id,
+    startDate: new Date(),
+    endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    mealPlans: {
+      create: [
+        {
+          mealType: 'MORNING',
+          ingredients: ['Egg whites', 'Spinach', 'Tomatoes'],
+          instructions: ['No salt', 'Saute spinach lightly']
+        },
+        {
+          mealType: 'EVENING',
+          ingredients: ['Chicken breast', 'Quinoa', 'Broccoli'],
+          instructions: ['Grill the chicken', 'Cook quinoa as per instructions', 'Steam broccoli']
+        }
+      ]
+    }
+  }
+});
+
+
   console.log('Database seeded successfully');
 }
 
