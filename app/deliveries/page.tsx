@@ -4,129 +4,152 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Sidebar } from '@/components/ui/Sidebar';
 
-type MealDelivery = {
+interface MealDelivery {
   id: string;
-  patient: { name: string };
-  mealPlan: { mealType: string };
   status: string;
-};
+  scheduledFor: string;
+  notes?: string;
+}
 
-const MealDelivery = () => {
-  const [mealDeliveries, setMealDeliveries] = useState<MealDelivery[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+interface MealPlan {
+  id: string;
+  mealType: string;
+  ingredients: string[];
+  instructions: string[];
+  mealDeliveries: MealDelivery[];
+}
+
+interface DietChart {
+  id: string;
+  startDate: string;
+  endDate?: string;
+  mealPlans: MealPlan[];
+}
+
+interface Patient {
+  id: string;
+  name: string;
+  contactInfo: string;
+  floorNumber: string;
+  roomNumber: string;
+  bedNumber: string;
+  emergencyContact: string;
+  diseases: string[];
+  allergies: string[];
+  dietCharts: DietChart[];
+}
+
+export default function DeliveriesPage() {
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchMealDeliveries = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get('/api/meal-deliveries/delivery');
-        setMealDeliveries(response.data);
-      } catch (error) {
-        setError('Failed to fetch meal deliveries.');
-        console.error('Error fetching meal deliveries:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMealDeliveries();
+    fetchPatientsWithMealPlans();
   }, []);
 
-  const handleDeliveryStatus = async (deliveryId: string, status: string, notes: string) => {
-    if (!deliveryId || !status) {
-      alert('Delivery ID and status are required!');
-      return;
-    }
-
+  const fetchPatientsWithMealPlans = async () => {
     try {
-      const response = await axios.put('/api/meal-deliveries/delivery', { deliveryId, status, notes });
-      setMealDeliveries((prevState) =>
-        prevState.map((meal) =>
-          meal.id === deliveryId ? { ...meal, status: response.data.status } : meal
-        )
-      );
-    } catch (error) {
-      console.error('Error updating delivery status:', error);
+      const response = await axios.get('/api/meal-deliveries/route');
+      setPatients(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError('Failed to fetch data');
+      setLoading(false);
     }
   };
 
-  if (isLoading) return <p className="text-center text-gray-500">Loading meal deliveries...</p>;
-  if (error) return <p className="text-center text-red-500">{error}</p>;
+  const updateDeliveryStatus = async (deliveryId: string, status: string) => {
+    try {
+      const response = await axios.put('/api/meal-deliveries/route', { deliveryId, status });
+      // Update the state with the updated delivery data
+      setPatients((prevPatients) =>
+        prevPatients.map((patient) => ({
+          ...patient,
+          dietCharts: patient.dietCharts.map((dietChart) => ({
+            ...dietChart,
+            mealPlans: dietChart.mealPlans.map((mealPlan) => ({
+              ...mealPlan,
+              mealDeliveries: mealPlan.mealDeliveries.map((delivery) =>
+                delivery.id === deliveryId ? response.data : delivery
+              ),
+            })),
+          })),
+        }))
+      );
+      alert("Status Updated.");
+    } catch (err) {
+      setError('Failed to update delivery status');
+    }
+  };
+
+  if (loading) return <div className="text-center text-xl font-semibold text-gray-600">Loading...</div>;
+  if (error) return <div className="text-center text-xl font-semibold text-red-600">{error}</div>;
 
   return (
     <div className="flex h-screen">
+
       <Sidebar/>
+
       <div className="container mx-auto p-6 ml-64">
-        <h2 className="text-2xl font-bold text-center mb-6">Meal Delivery Dashboard</h2>
-
-        {/* Summary Section */}
-        <div className="flex justify-around mb-8 bg-gray-100 p-4 rounded-lg shadow-md">
-          <div>
-            <h3 className="text-lg font-semibold">Total Deliveries</h3>
-            <p className="text-xl">{mealDeliveries.length}</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">In Delivery</h3>
-            <p className="text-xl">
-              {mealDeliveries.filter((meal) => meal.status === 'IN_DELIVERY').length}
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">Delivered</h3>
-            <p className="text-xl">
-              {mealDeliveries.filter((meal) => meal.status === 'DELIVERED').length}
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold">Pending</h3>
-            <p className="text-xl">
-              {mealDeliveries.filter((meal) => meal.status === 'PENDING').length}
-            </p>
-          </div>
-        </div>
-
-        {/* Delivery List */}
-        <ul className="space-y-4">
-          {mealDeliveries.map((meal) => (
-            <li
-              key={meal.id}
-              className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md border border-gray-200">
-              <div>
-                <p className="text-lg font-semibold">
-                  Patient: {meal.patient.name} - {meal.mealPlan.mealType} Meal
-                </p>
-                <p className="text-gray-600">Status: {meal.status}</p>
+        <h1 className="text-3xl font-bold mb-6">Meal Plans and Deliveries</h1>
+        <hr />
+        <br />
+        {patients.map((patient) => (
+          <div key={patient.id} className="bg-white p-6 mb-6 rounded-lg shadow-md hover:shadow-xl transition-all">
+            <div className="border-b pb-4 mb-4">
+              <h2 className="text-2xl font-semibold text-gray-800">{patient.name}</h2>
+              <hr />
+              <br />
+              <p className="text-gray-600">&#8226; ID: {patient.id}</p>
+              <p className="text-gray-600">&#8226; Contact Info: {patient.contactInfo}</p>
+              <p className="text-gray-600">&#8226; Floor: {patient.floorNumber}, Room: {patient.roomNumber}, Bed: {patient.bedNumber}</p>
+              <p className="text-gray-600">&#8226; Emergency Contact: {patient.emergencyContact}</p>
+              <p className="text-gray-600">&#8226; Diseases: {patient.diseases.join(', ')}</p>
+              <p className="text-gray-600">&#8226; Allergies: {patient.allergies.join(', ')}</p>
+            </div>
+            
+            {patient.dietCharts.map((chart) => (
+              <div key={chart.id} className="mt-6">
+                <h3 className="text-xl font-semibold text-gray-800">
+                  Diet Chart (Start: {new Date(chart.startDate).toLocaleDateString()})
+                </h3>
+                {chart.endDate && <p className="text-gray-600">End Date: {new Date(chart.endDate).toLocaleDateString()}</p>}
+                {chart.mealPlans.map((plan) => (
+                  <div key={plan.id} className="mt-4 p-4 border rounded-lg bg-gray-50 shadow-sm hover:bg-gray-100 transition-all">
+                    <h4 className="text-lg font-semibold text-gray-800">{plan.mealType} Meal</h4>
+                    <p className="text-gray-600">Ingredients: {plan.ingredients.join(', ')}</p>
+                    <p className="text-gray-600">Instructions: {plan.instructions.join(', ')}</p>
+                    
+                    {plan.mealDeliveries.map((delivery) => (
+                      <div key={delivery.id} className="mt-4 p-4 border-t border-gray-200">
+                        <p className="font-semibold text-gray-700">Status: {delivery.status}</p>
+                        <p className="text-gray-600">Scheduled For: {new Date(delivery.scheduledFor).toLocaleString()}</p>
+                        {delivery.notes && <p className="text-gray-600">Notes: {delivery.notes}</p>}
+                        <div className="mt-4">
+                          <select
+                            value={delivery.status}
+                            onChange={(e) => updateDeliveryStatus(delivery.id, e.target.value)}
+                            className="border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                            disabled={delivery.status === 'DELIVERED' || delivery.status === 'CANCELLED'}
+                          >
+                            <option value="PENDING">Pending</option>
+                            <option value="PREPARING">Preparing</option>
+                            <option value="READY">Ready</option>
+                            <option value="IN_DELIVERY">In Delivery</option>
+                            <option value="DELIVERED">Delivered</option>
+                            <option value="CANCELLED">Cancelled</option>
+                          </select>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
               </div>
-              <div className="flex space-x-4">
-                <button
-                  disabled={meal.status === 'IN_DELIVERY' || meal.status === 'DELIVERED'}
-                  onClick={() => handleDeliveryStatus(meal.id, 'IN_DELIVERY', '')}
-                  className={`p-2 rounded-lg ${
-                    meal.status === 'IN_DELIVERY' || meal.status === 'DELIVERED'
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
-                  }`}>
-                  Start Delivery
-                </button>
-                <button
-                  disabled={meal.status === 'DELIVERED'}
-                  onClick={() => handleDeliveryStatus(meal.id, 'DELIVERED', 'Delivered on time')}
-                  className={`p-2 rounded-lg ${
-                    meal.status === 'DELIVERED'
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-green-500 text-white hover:bg-green-600'
-                  }`}>
-                  Mark as Delivered
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
-};
-
-export default MealDelivery;
+}

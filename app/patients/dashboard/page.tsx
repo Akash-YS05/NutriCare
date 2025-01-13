@@ -54,7 +54,7 @@ const PatientDietDashboard = () => {
     <div className="flex h-screen">
 
         <Sidebar/>
-        <div className="flex-1 overflow-y-auto bg-gray-50 p-6">
+        <div className="flex-1 overflow-y-auto bg-gray-50 p-6 ml-64">
         <h1 className="text-3xl font-bold text-gray-900">Patient and Diet Charts</h1>
 
         {loading ? (
@@ -72,6 +72,7 @@ const PatientDietDashboard = () => {
                     <h2 className="text-xl font-semibold text-gray-800">
                     {patient.name} ({patient.age} years old)
                     </h2>
+                    <p className="mt-2 text-sm text-gray-600">Patient ID: {patient.id}</p>
                     <p className="mt-2 text-sm text-gray-600">Room: {patient.roomNumber}</p>
                     <p className="mt-2 text-sm text-gray-600">Gender: {patient.gender}</p>
                     <p className="mt-2 text-sm text-gray-600">Contact: {patient.contactInfo}</p>
@@ -103,7 +104,7 @@ const PatientDietDashboard = () => {
                     )}
                     </div>
 
-                    <Link href={`/patients/${patient.id}`}>
+                    <Link href={`/deliveries`}>
                     <button className="mt-4 text-blue-600 hover:text-blue-800">
                         View Patient Details
                     </button>
