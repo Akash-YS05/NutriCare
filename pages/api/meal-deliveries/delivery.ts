@@ -5,7 +5,6 @@ import { DeliveryStatus } from '@prisma/client';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {
         try {
-          // Fetch all meal deliveries without filtering by status
           const mealDeliveries = await prisma.mealDelivery.findMany({
             include: {
               patient: true,

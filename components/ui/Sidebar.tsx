@@ -4,7 +4,7 @@ import { FaHome, FaUser, FaSignOutAlt } from 'react-icons/fa';
 
 export const Sidebar = () => {
   return (
-    <div className="w-64 bg-gray-900 text-white flex flex-col">
+    <div className="w-64 h-screen fixed top-0 left-0 bg-gray-900 text-white flex flex-col">
       {/* Header */}
       <div className="p-4 border-b border-gray-700">
         <h1 className="text-lg font-bold">Hospital Admin</h1>
@@ -12,10 +12,10 @@ export const Sidebar = () => {
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-4 space-y-2">
-        <SidebarNavItem href="/" icon={FaHome}>
+        <SidebarNavItem href="/dashboard" icon={FaHome}>
           Dashboard
         </SidebarNavItem>
-        <SidebarNavItem href="/patients" icon={FaUser}>
+        <SidebarNavItem href="/patients/dashboard" icon={FaUser}>
           Patients
         </SidebarNavItem>
         <SidebarNavItem href="/logout" icon={FaSignOutAlt}>

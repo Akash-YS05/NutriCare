@@ -216,14 +216,14 @@ const mealPlan3 = await prisma.mealPlan.findMany({
   where: {
     dietChart: {
       patient: {
-        id: patient3.id, // Replace with the actual patient ID
+        id: patient3.id,
       },
     },
   },
   include: {
     dietChart: {
       include: {
-        patient: true, // Include patient details
+        patient: true, 
       },
     },
   },
