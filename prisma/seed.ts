@@ -17,7 +17,6 @@ async function main() {
   await prisma.deliveryStaff.deleteMany();
   await prisma.user.deleteMany();
 
-  // Create users with different roles
   const managerPassword = await bcrypt.hash('Password@2025', 10);
   const manager = await prisma.user.create({
     data: {
@@ -61,7 +60,6 @@ async function main() {
     },
   });
 
-  // Create sample patients
   const patient1 = await prisma.patient.create({
     data: {
       name: 'John Doe',
@@ -116,7 +114,6 @@ async function main() {
     },
   });
 
-  // Create meal plans for patient 1
   const mealPlan1_1 = await prisma.mealPlan.create({
     data: {
       mealType: 'MORNING',
@@ -135,7 +132,6 @@ async function main() {
     },
   });
 
-  // Create diet chart for patient 2
   const dietChart2 = await prisma.dietChart.create({
     data: {
       patientId: patient2.id,
@@ -144,7 +140,6 @@ async function main() {
     },
   });
 
-  // Create meal plans for patient 2
   const mealPlan2_1 = await prisma.mealPlan.create({
     data: {
       mealType: 'MORNING',
@@ -163,7 +158,6 @@ async function main() {
     },
   });
 
-  // Create diet chart for patient 3
   const dietChart3 = await prisma.dietChart.create({
     data: {
       patientId: patient3.id,
@@ -172,7 +166,6 @@ async function main() {
     },
   });
 
-  // Create meal plans for patient 3
   const mealPlan3_1 = await prisma.mealPlan.create({
     data: {
       mealType: 'MORNING',
@@ -191,7 +184,6 @@ async function main() {
     },
   });
 
-  // Create meal deliveries for all patients' meal plans
   const pantryStaff = await prisma.pantryStaff.findFirst();
   const deliveryStaff = await prisma.deliveryStaff.findFirst();
 
@@ -199,7 +191,6 @@ async function main() {
     throw new Error('One or more required references are missing.');
   }
 
-  // Create meal deliveries for patient 1
   await prisma.mealDelivery.create({
     data: {
       patientId: patient1.id,
@@ -222,7 +213,6 @@ async function main() {
     },
   });
 
-  // Create meal deliveries for patient 2
   await prisma.mealDelivery.create({
     data: {
       patientId: patient2.id,
@@ -245,7 +235,6 @@ async function main() {
     },
   });
 
-  // Create meal deliveries for patient 3
   await prisma.mealDelivery.create({
     data: {
       patientId: patient3.id,

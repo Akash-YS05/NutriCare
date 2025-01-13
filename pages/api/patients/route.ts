@@ -7,12 +7,11 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      // Fetch all patients with their diet charts and meal plans
       const patients = await prisma.patient.findMany({
         include: {
           dietCharts: {
             include: {
-              mealPlans: true,  // Include meal plans for each diet chart
+              mealPlans: true,  
             },
           },
         },

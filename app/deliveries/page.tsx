@@ -62,7 +62,6 @@ export default function DeliveriesPage() {
   const updateDeliveryStatus = async (deliveryId: string, status: string) => {
     try {
       const response = await axios.put('/api/meal-deliveries/route', { deliveryId, status });
-      // Update the state with the updated delivery data
       setPatients((prevPatients) =>
         prevPatients.map((patient) => ({
           ...patient,

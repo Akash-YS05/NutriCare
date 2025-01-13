@@ -28,13 +28,11 @@ interface PatientInput {
   dietCharts: DietChartInput[];
 }
 
-// The API route handler
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     try {
       const patientData: PatientInput = req.body;
 
-      // Create the patient record
       const patient = await prisma.patient.create({
         data: {
           name: patientData.name,

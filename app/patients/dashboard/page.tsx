@@ -116,7 +116,6 @@ const PatientDietDashboard = () => {
 
   const addDietChart = () => {
     setNewPatient((prev) => {
-      // Ensure default structure for dietCharts
       const updatedPatient = {
         ...prev,
         dietCharts: [
@@ -154,7 +153,6 @@ const PatientDietDashboard = () => {
       setPatients((prev) => [...prev, response.data.patient]);
       setShowForm(false);
   
-      // Reset state after submission
       setNewPatient({
         name: "",
         age: 0,
