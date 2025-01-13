@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { Inter } from 'next/font/google'
 import './globals.css'
 import {Sidebar} from '@/components/ui/Sidebar'
@@ -6,6 +7,10 @@ import { authOptions } from '@/lib/auth'
 import Provider from '@/components/Provider'
 
 const inter = Inter({ subsets: ['latin'] })
+export const metadata: Metadata = {
+  title: "Medcare - Healthcare Services",
+  description: "Professional healthcare services for your well-being",
+}
 
 export default async function RootLayout({
   children,
