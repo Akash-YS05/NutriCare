@@ -54,7 +54,7 @@ export default function DeliveriesPage() {
       setPatients(response.data);
       setLoading(false);
     } catch (err) {
-      setError('Failed to fetch data');
+      setError(err+'Failed to fetch data');
       setLoading(false);
     }
   };
@@ -78,7 +78,7 @@ export default function DeliveriesPage() {
       );
       alert("Status Updated.");
     } catch (err) {
-      setError('Failed to update delivery status');
+      setError(err+'Failed to update delivery status');
     }
   };
 

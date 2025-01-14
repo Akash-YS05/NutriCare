@@ -1,14 +1,10 @@
 "use client"
 
 import { Sidebar } from '@/components/ui/Sidebar';
-import { FaClipboardList, FaUser, FaBell } from 'react-icons/fa';
+import { FaClipboardList, FaBell } from 'react-icons/fa';
 import Link from 'next/link';
-import { useState } from 'react';
 
 export default function DashboardPage() {
-  const [delayedDeliveries, setDelayedDeliveries] = useState(2); //sample data for now
-  const [mealPreparationStatus, setMealPreparationStatus] = useState(5); // sample data for now
-
   return (
     <div className="flex h-screen">
       <Sidebar />
@@ -20,13 +16,13 @@ export default function DashboardPage() {
           <div className="flex items-center space-x-2">
             <FaBell className="h-6 w-6 text-red-500" />
             <span className="text-lg font-semibold text-gray-700">
-              {delayedDeliveries} Delayed Deliveries
+              2 Delayed Deliveries
             </span>
           </div>
           <div className="flex items-center space-x-2">
             <FaClipboardList className="h-6 w-6 text-yellow-500" />
             <span className="text-lg font-semibold text-gray-700">
-              {mealPreparationStatus} Meals in Progress
+              5 Meals in Progress
             </span>
           </div>
         </div>

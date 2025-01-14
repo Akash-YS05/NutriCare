@@ -2,9 +2,9 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Utensils, ClipboardList, TruckIcon as TruckDelivery, Users, Star, ChevronRight } from 'lucide-react'
+import { Utensils, ClipboardList, TruckIcon as TruckDelivery, Users, Star } from 'lucide-react'
 import { Button } from "@/components/ui/Button"
-import { inter, poppins } from './fonts'
+import { poppins } from './fonts'
 import { useEffect, useState } from "react"
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -160,7 +160,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-6">
-                  "NutriCare has significantly improved our food service efficiency. Patient satisfaction has increased, and our staff finds it easy to use."
+                  NutriCare has significantly improved our food service efficiency <br /> Patient satisfaction has increased and our staff finds it easy to use
                 </p>
                 <div className="flex items-center">
                   <Image
