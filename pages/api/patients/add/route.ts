@@ -1,5 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/lib/prisma";
+interface MealPlan {
+  mealType: string;
+  ingredients: string[];
+  instructions: string;
+}
+
+interface DietChart {
+  startDate: string;
+  endDate?: string | null;
+  mealPlans: MealPlan[];
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -20,11 +31,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         diseases: req.body.diseases || [],
         allergies: req.body.allergies || [],
         dietCharts: {
-          create: req.body.dietCharts.map((chart: any) => ({
+          create: req.body.dietCharts.map((chart: DietChart) => ({
             startDate: new Date(chart.startDate),
             endDate: chart.endDate ? new Date(chart.endDate) : null,
             mealPlans: {
-              create: chart.mealPlans.map((meal: any) => ({
+              create: chart.mealPlans.map((meal: MealPlan) => ({
                 mealType: meal.mealType,
                 ingredients: meal.ingredients,
                 instructions: meal.instructions,

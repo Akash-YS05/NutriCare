@@ -22,18 +22,17 @@ export default function LoginPage() {
 
       const { token, user } = res.data;
 
-      // Save token to localStorage
       localStorage.setItem('token', token);
 
       alert(`Welcome, ${user.email}!`);
-      router.push('/dashboard'); // Redirect to dashboard
-    } catch (error: any) {
+      router.push('/dashboard'); 
+    } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data?.error || 'Login failed');
-        console.error('Axios error:', error.response?.data); // Log error for debugging
+        console.error('Axios error:', error.response?.data); 
       } else {
         setError('Something went wrong');
-        console.error('Unexpected error:', error); // Log error for debugging
+        console.error('Unexpected error:', error); 
       }
     }
   };
