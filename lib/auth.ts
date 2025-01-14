@@ -1,18 +1,19 @@
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { NextAuthOptions } from "next-auth";
 import { prisma } from "./prisma";
 import * as bcrypt from "bcrypt";
+import CredentialsProvider from "next-auth/providers/credentials";
+
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
-    debug: true, //nextAuth's debug feature
+    debug: true, // nextAuth's debug feature
     providers: [
         CredentialsProvider({
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" }
+                password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
                 try {
@@ -23,11 +24,11 @@ export const authOptions: NextAuthOptions = {
 
                     const user = await prisma.user.findUnique({
                         where: {
-                            email: credentials.email
-                        }
+                            email: credentials.email,
+                        },
                     });
 
-                    console.log("User found:", !!user); //for debugging
+                    console.log("User found:", !!user); // for debugging
 
                     if (!user) {
                         console.log("User not found for email:", credentials.email);
@@ -46,21 +47,21 @@ export const authOptions: NextAuthOptions = {
                         id: user.id,
                         email: user.email,
                         name: user.name,
-                        role: user.role
+                        role: user.role,
                     };
-                    console.log("Returning user object:", { ...returnUser, password: '[REDACTED]' });
+                    console.log("Returning user object:", { ...returnUser, password: "[REDACTED]" });
                     return returnUser;
-
                 } catch (error) {
                     console.error("Auth error:", error);
                     throw error;
                 }
-            }
-        })
+            },
+        }),
     ],
     session: {
         strategy: "jwt",
     },
+    secret: process.env.NEXTAUTH_SECRET, 
     pages: {
         signIn: "/login",
         error: "/auth/error",
@@ -89,6 +90,6 @@ export const authOptions: NextAuthOptions = {
                 console.error("JWT callback error:", error);
                 throw error;
             }
-        }
-    }
+        },
+    },
 };
