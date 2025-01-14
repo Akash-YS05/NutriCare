@@ -13,7 +13,7 @@ export default function DashboardPage() {
     <div className="flex h-screen">
       <Sidebar />
 
-      <div className="flex-1 overflow-y-auto bg-gray-50 p-6 ml-64">
+      <div className="flex-1 overflow-y-auto bg-gray-50 p-6 ml-20 md:ml-64">
         <h1 className="text-3xl text-center font-bold text-gray-900">Hospital Food Manager Dashboard</h1>
 
         <div className="mt-6 flex items-center space-x-4">

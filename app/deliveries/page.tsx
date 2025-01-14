@@ -43,7 +43,7 @@ export default function PantryDashboard() {
   return (
     <div className="flex h-screen">
         <Sidebar/>
-        <div className="container mx-auto p-6 ml-64">
+        <div className="container mx-auto p-6 ml-20 md:ml-64">
         <h1 className="text-2xl font-bold mb-6">Meal Plans and Deliveries</h1>
         <p>Have a real time look on patient meal details, the delivery status and be updated about all changes from the pantry staff.</p>
         <hr />

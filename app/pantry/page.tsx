@@ -90,7 +90,7 @@ export default function DeliveriesPage() {
 
       <Sidebar/>
 
-      <div className="container mx-auto p-6 ml-64">
+      <div className="container mx-auto p-6 ml-20 md:ml-64">
         <h1 className="text-3xl font-bold mb-6">Pantry Dashboard</h1>
         <p>See assigned meal details, with tailored ingredients, instructions carefully set with details about allergies, if any. <br />Update the status of every meal in real time.</p>
 

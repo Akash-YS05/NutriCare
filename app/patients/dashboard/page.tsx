@@ -194,7 +194,7 @@ const PatientDietDashboard = () => {
   return (
     <div className="flex h-screen">
       <Sidebar />
-      <div className="flex-1 overflow-y-auto bg-gray-50 p-6 ml-64">
+      <div className="flex-1 overflow-y-auto bg-gray-50 p-6 ml-20 md:ml-64">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900">Patient and Diet Charts</h1>
           <button

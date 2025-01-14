@@ -1,13 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
 import { FaHome, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { Utensils } from 'lucide-react';
 
 export const Sidebar = () => {
   return (
-    <div className="w-64 h-screen fixed top-0 left-0 bg-gray-900 text-white flex flex-col">
+    <div className="w-20 md:w-64 h-screen fixed top-0 left-0 bg-gray-900 text-white flex flex-col">
       {/* Header */}
       <div className="p-4 border-b border-gray-700">
-        <h1 className="text-lg font-bold">Hospital Admin</h1>
+        <Link href="/" className='flex gap-4 items-center'>
+          <Utensils className='mx-2 md:m-0'></Utensils>
+          <h1 className="hidden md:block md:text-lg font-bold">NutriCare</h1>
+        </Link>
       </div>
 
       {/* Navigation */}
@@ -25,7 +29,7 @@ export const Sidebar = () => {
 
       {/* Footer */}
       <div className="p-4 border-t border-gray-700">
-        <p className="text-sm text-gray-400">&copy; 2025 Hospital Admin</p>
+        <p className="text-sm text-gray-400">&copy; 2025 NutriCare</p>
       </div>
     </div>
   );
@@ -46,7 +50,7 @@ const SidebarNavItem = ({
       className="flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-gray-700 transition"
     >
       <Icon className="h-5 w-5" />
-      <span>{children}</span>
+      <span className='hidden md:block'>{children}</span>
     </Link>
   );
 };

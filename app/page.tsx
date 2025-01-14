@@ -1,16 +1,33 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Utensils, ClipboardList, TruckIcon as TruckDelivery, Users, Star, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/Button"
 import { inter, poppins } from './fonts'
+import { useEffect, useState } from "react"
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+  };
+
   return (
     <div className={`min-h-screen bg-gray-50 ${poppins.variable} font-sans scroll-smooth`}>
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <Utensils className="w-8 h-8 text-emerald-500 transition-transform group-hover:rotate-12" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-emerald-500 text-transparent bg-clip-text">NutriCare</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-emerald-500 text-transparent bg-clip-text">
+              NutriCare
+            </span>
           </Link>
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="text-sm font-medium hover:text-emerald-500 transition-colors">
@@ -26,9 +43,18 @@ export default function Home() {
               Contact
             </Link>
           </nav>
-          <Button className="bg-emerald-500 hover:bg-emerald-600 transition-colors">
-            <Link href="/login">Login</Link>
-          </Button>
+          {isLoggedIn ? (
+            <Button
+              className="bg-red-500 hover:bg-red-600 transition-colors"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button className="bg-emerald-500 hover:bg-emerald-600 transition-colors">
+              <Link href="/login">Login</Link>
+            </Button>
+          )}
         </div>
       </header>
 
@@ -45,8 +71,8 @@ export default function Home() {
               <p className="text-xl md:text-2xl text-sky-100 pl-4">
                 Efficiently manage patient diets, assign kitchen tasks, and track food delivery with our comprehensive system.
               </p>
-              <Button size="lg" variant="secondary" className="text-sky-800 bg-white hover:bg-sky-50 ml-4 transition-colors">
-                Get Started
+              <Button size="lg" variant="secondary" className="text-sky-800 bg-white hover:bg-sky-50 ml-4 p-6 text-lg transition-colors">
+                <Link href="/dashboard">View Dashboard</Link>
               </Button>
             </div>
             <div className="relative h-[400px] md:h-[400px] animate-fade-in bg-transparent">
