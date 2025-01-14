@@ -2,33 +2,32 @@ import Image from "next/image"
 import Link from "next/link"
 import { Utensils, ClipboardList, TruckIcon as TruckDelivery, Users, Star, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/Button"
-
+import { inter, poppins } from './fonts'
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+    <div className={`min-h-screen bg-gray-50 ${poppins.variable} font-sans scroll-smooth`}>
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <Utensils className="w-8 h-8 text-emerald-500" />
+            <Utensils className="w-8 h-8 text-emerald-500 transition-transform group-hover:rotate-12" />
             <span className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-emerald-500 text-transparent bg-clip-text">NutriCare</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="text-sm font-medium hover:text-emerald-500 transition-colors">
               Home
             </Link>
-            <Link href="/about" className="text-sm font-medium hover:text-emerald-500 transition-colors">
-              About
-            </Link>
-            <Link href="/features" className="text-sm font-medium hover:text-emerald-500 transition-colors">
+            <Link href="#features" className="text-sm font-medium hover:text-emerald-500 transition-colors">
               Features
             </Link>
-            <Link href="/contact" className="text-sm font-medium hover:text-emerald-500 transition-colors">
+            <Link href="#testimonial" className="text-sm font-medium hover:text-emerald-500 transition-colors">
+              Testimonials
+            </Link>
+            <Link href="#contact" className="text-sm font-medium hover:text-emerald-500 transition-colors">
               Contact
             </Link>
           </nav>
           <Button className="bg-emerald-500 hover:bg-emerald-600 transition-colors">
-            Login
+            <Link href="/login">Login</Link>
           </Button>
         </div>
       </header>
@@ -36,24 +35,26 @@ export default function Home() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-sky-600 to-emerald-500 text-white">
         <div className="container mx-auto px-4 py-20 md:py-20">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Streamline Hospital Food Management
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-4">
+              <h1 className={`${poppins.className} text-3xl md:text-6xl mx-4 font-bold leading-tight`}>
+                Streamline <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-emerald-500 to-indigo-300">
+                    Hospital Food
+                  </span> Management
               </h1>
-              <p className="text-xl md:text-2xl text-sky-100">
+              <p className="text-xl md:text-2xl text-sky-100 pl-4">
                 Efficiently manage patient diets, assign kitchen tasks, and track food delivery with our comprehensive system.
               </p>
-              <Button size="lg" variant="secondary" className="text-sky-800 bg-white hover:bg-sky-50 transition-colors">
+              <Button size="lg" variant="secondary" className="text-sky-800 bg-white hover:bg-sky-50 ml-4 transition-colors">
                 Get Started
               </Button>
             </div>
-            <div className="relative h-[400px] md:h-[600px]">
+            <div className="relative h-[400px] md:h-[400px] animate-fade-in bg-transparent">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ebf014fcacb945d37d6976edcfc6312b.jpg-bURynvF7fiCKn9Zw8AiM6BwcOW8z6q.jpeg"
+                src="https://i.pinimg.com/736x/3d/ce/a5/3dcea50fdd77a48aa568c7e270d353f2.jpg"
                 alt="Hospital Food Management"
                 fill
-                className="object-contain rounded-lg shadow-2xl"
+                className="object-fit rounded-lg shadow-2xl"
                 priority
               />
             </div>
@@ -62,7 +63,7 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="py-20 bg-white">
+      <section id="features" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Key Features</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -108,7 +109,7 @@ export default function Home() {
                 Learn More
               </Button>
             </div>
-            <div className="relative h-[500px]">
+            <div className="relative h-[500px] transform hover:scale-105 transition-transform duration-300">
               <Image
                 src="https://cdn.dribbble.com/userupload/16156002/file/original-bc57d5af2b5ad1bba18238f1a80ed5c0.jpg?resize=1504x1128&vertical=center"
                 alt="Hospital Food Management Dashboard"
@@ -121,12 +122,12 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
+      <section id="testimonial" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What Our Clients Say</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[1, 2, 3].map((testimonial) => (
-              <div key={testimonial} className="bg-gray-50 rounded-xl overflow-hidden shadow-lg p-8 transition-all hover:shadow-xl">
+              <div key={testimonial} className="bg-gray-50 rounded-xl overflow-hidden shadow-lg p-8 transition-all hover:shadow-xl hover:-translate-y-1">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -155,7 +156,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12">
+      <footer id="contact" className="bg-gray-800 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>

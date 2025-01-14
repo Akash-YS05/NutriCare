@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-
+import Link from 'next/link';
+import { Utensils } from 'lucide-react';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,10 +33,15 @@ export default function LoginPage() {
   };
 
   return (
+    <div className='bg-white'>
+            <Link href="/" className="flex items-center space-x-2 pl-4">
+            <Utensils className="w-8 h-14 text-emerald-500 transition-transform group-hover:rotate-12" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-emerald-500 text-transparent bg-clip-text">NutriCare</span>
+          </Link>
     <div className="min-h-screen flex">
       {/* Left Section: Image */}
-      <div className="w-3/5 flex items-center justify-center bg-white">
-        <div className="relative w-3/4 h-3/4">
+      <div className="hidden md:block md:w-3/5 items-center justify-center bg-white">
+        <div className="relative w-3/4 h-5/6">
           <Image
             src="https://cdn.dribbble.com/users/3995683/screenshots/7948918/media/8264264ae03b6905ca67a4fa690b360b.png?resize=1200x900&vertical=center"
             alt="Hospital Illustration"
@@ -47,7 +53,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right Section: Form */}
-      <div className="w-2/5 flex items-center justify-center bg-white px-10 border-l border-slate-300">
+      <div className="w-full md:w-2/5 flex items-center justify-center bg-white px-10 border-l border-slate-300">
         <div className="max-w-md w-full space-y-8">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -111,6 +117,7 @@ export default function LoginPage() {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 }
