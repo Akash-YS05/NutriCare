@@ -8,7 +8,7 @@ import Provider from '@/components/Provider'
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
-  title: "Medcare - Healthcare Services",
+  title: "NutriCare - Healthcare Services",
   description: "Professional healthcare services for your well-being",
 }
 
