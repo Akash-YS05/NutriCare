@@ -59,23 +59,26 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-sky-600 to-emerald-500 text-white">
-        <div className="container mx-auto px-4 py-20 md:py-20">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+      <section className="bg-gradient-to-br from-sky-500 to-emerald-500 text-white">
+        <div className="container flex justify-center items-center mx-auto px-4 py-20 md:py-20">
+          <div className=" items-center">
             <div className="space-y-4">
-              <h1 className={`${poppins.className} text-3xl md:text-6xl mx-4 font-bold leading-tight`}>
-                Streamline <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-emerald-500 to-indigo-300">
+              <h1 className={`font-[Manjari] text-3xl md:text-8xl mx-4 text-center`}>
+                Streamline <span className="block text-teal-300 font-extrabold">
                     Hospital Food
                   </span> Management
               </h1>
-              <p className="text-xl md:text-2xl text-sky-100 pl-4">
+              <p className="text-xl md:text-2xl font-thin sm:pt-6 max-w-2xl text-center">
                 Efficiently manage patient diets, assign kitchen tasks, and track food delivery with our comprehensive system.
               </p>
-              <Button size="lg" variant="secondary" className="text-sky-800 bg-white hover:bg-sky-50 ml-4 p-6 text-lg transition-colors">
-                <Link href="/dashboard">View Dashboard</Link>
-              </Button>
+              <div className="flex justify-center space-x-4">
+                <Button size="lg" variant="secondary" className="text-sky-800 bg-white hover:bg-sky-50 p-6 text-lg transition-colors">
+                  <Link href="/dashboard">View Dashboard</Link>
+                </Button>
+              </div>
+              
             </div>
-            <div className="relative h-[400px] md:h-[400px] animate-fade-in bg-transparent">
+            {/* <div className="relative h-[400px] md:h-[400px] animate-fade-in bg-transparent">
               <Image
                 src="https://i.pinimg.com/736x/3d/ce/a5/3dcea50fdd77a48aa568c7e270d353f2.jpg"
                 alt="Hospital Food Management"
@@ -83,7 +86,7 @@ export default function Home() {
                 className="object-fit rounded-lg shadow-2xl"
                 priority
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
