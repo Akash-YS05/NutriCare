@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter, Noto_Serif_Display, Manjari } from 'next/font/google'
+import { Inter, Manjari } from 'next/font/google'
 import './globals.css'
 import {Sidebar} from '@/components/ui/Sidebar'
 import { getServerSession } from 'next-auth'
@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   title: "NutriCare - Healthcare Services",
   description: "Professional healthcare services for your well-being",
 }
-const notoSerifDisplay = Noto_Serif_Display({ subsets: ['latin'] })
 
 const manjari = Manjari({weight: "400", style: 'normal', subsets: ['latin'] })
 export default async function RootLayout({
@@ -23,7 +22,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${manjari.className}`} >
         <Provider>
           <div className="flex h-screen">
             {session && <Sidebar />}
