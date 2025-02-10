@@ -2,7 +2,7 @@
 
 NutriCare is a comprehensive hospital food management system designed to streamline patient dietary tracking, food preparation, and delivery. Built with **Next.js**, **Tailwind CSS**, and **PostgreSQL**, it helps hospital food managers efficiently handle patient details, manage diet charts, assign tasks to the inner pantry, and track food delivery status.
 
-💊 <a href="https://hospital-food-delivery-rjc7.onrender.com/">Visit NutriCare</a>
+💊 <a href="https://nutricare-site.vercel.app/">Visit NutriCare</a>
 
 ## 🚀 Features
 
