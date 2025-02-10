@@ -62,15 +62,15 @@ export default function Home() {
       <section className="md:h-screen h-4/5 bg-gradient-to-br from-sky-500 to-emerald-500 text-white">
         <div className="container flex justify-center items-center mx-auto px-4 py-20 md:py-20">
           <div className=" items-center ">
-            <div className="space-y-6">
-              <h1 className={`font-[Manjari] text-5xl md:text-8xl mx-4 text-center leading-snug`}>
-                Streamline <span className="block text-teal-300 font-extrabold">
-                    Hospital Food
-                  </span> Management
-              </h1>
-              <p className="text-2xl md:text-2xl font-thin sm:pt-6 max-w-2xl text-center">
+            <div className="space-y-2 leading-snug">
+              <h1 className="font-[Manjari] text-5xl md:text-8xl text-center">Right <span className="inline text-teal-300 font-extrabold">Meal.</span></h1>
+              <h1 className="font-[Manjari] text-5xl md:text-8xl text-center ">Right <span className="inline text-teal-300 font-extrabold">Patient.</span></h1>
+              <h1 className="font-[Manjari] text-5xl md:text-8xl text-center ">Right <span className="inline text-teal-300 font-extrabold">Time.</span></h1>
+              
+              <p className="text-lg md:text-2xl font-[Inter] font-light p-3 max-w-2xl text-center">
                 Efficiently manage patient diets, assign kitchen tasks, and track food delivery with our comprehensive system.
               </p>
+              
               <div className="flex justify-center space-x-4">
                 <Button size="lg" variant="secondary" className="text-sky-800 bg-white hover:bg-sky-50 p-6 text-lg transition-colors">
                   <Link href="/dashboard">View Dashboard</Link>
