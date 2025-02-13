@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`min-h-screen bg-gray-50 ${poppins.className} font-sans scroll-smooth`}>
+    <div className={`min-h-screen bg-gray-50 ${poppins.className} font-sans scroll-smooth `}>
       <header className="bg-white shadow-sm sticky top-0 z-10 font-[Manjari]">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
@@ -29,7 +29,7 @@ export default function Home() {
               NutriCare
             </span>
           </Link>
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex text-gray-800 items-center space-x-8">
             <Link href="/" className="text-md font-semibold hover:text-emerald-500 transition-colors">
               Home
             </Link>
@@ -45,13 +45,13 @@ export default function Home() {
           </nav>
           {isLoggedIn ? (
             <Button
-              className="bg-red-500 hover:bg-red-600 transition-colors font-semibold"
+              className="bg-red-500 hover:bg-red-600 transition-colors text-md items-center"
               onClick={handleLogout}
             >
               Logout
             </Button>
           ) : (
-            <Button className="bg-emerald-500 hover:bg-emerald-600 transition-colors font-semibold">
+            <Button className="bg-emerald-500 hover:bg-emerald-600 transition-colors text-md items-center">
               <Link href="/login">Login</Link>
             </Button>
           )}
@@ -67,7 +67,7 @@ export default function Home() {
               <h1 className="font-[Manjari] text-5xl md:text-8xl text-center ">Right <span className="inline text-teal-300 font-extrabold">Patient.</span></h1>
               <h1 className="font-[Manjari] text-5xl md:text-8xl text-center ">Right <span className="inline text-teal-300 font-extrabold">Time.</span></h1>
               
-              <p className="text-lg md:text-2xl font-[Inter] font-light p-3 max-w-2xl text-center">
+              <p className="text-lg md:text-2xl font-[Inter] font-extralight p-3 max-w-2xl text-center">
                 Efficiently manage patient diets, assign kitchen tasks, and track food delivery with our comprehensive system.
               </p>
               
