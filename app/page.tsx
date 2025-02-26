@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Utensils, ClipboardList, TruckIcon as TruckDelivery, Users, Star } from 'lucide-react'
+import { Utensils, ClipboardList, TruckIcon as TruckDelivery, Users, ArrowRight, FileText, ChefHat } from 'lucide-react'
 import { Button } from "@/components/ui/Button"
 import { poppins } from './fonts'
 import { useEffect, useState } from "react"
@@ -84,7 +84,7 @@ export default function Home() {
 
       <section id="features" className="py-20 bg-white font-[Manjari]">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Key Features</h2>
+          <h2 className="text-3xl md:text-4xl text-gray-700 font-bold text-center mb-12">Our Key Features</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { icon: ClipboardList, title: "Patient Diet Management", description: "Easily manage and update patient details and their specific dietary requirements." },
@@ -93,10 +93,35 @@ export default function Home() {
             ].map((feature, index) => (
               <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
                 <feature.icon className="w-16 h-16 text-emerald-500 mb-6" />
-                <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
+                <h3 className="text-xl font-semibold mb-4 text-gray-700">{feature.title}</h3>
                 <p className="text-gray-600">
                   {feature.description}
                 </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Workflow Section */}
+      <section id="workflow" className="py-20 bg-gray-100 font-[Manjari]">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl text-gray-700 font-bold text-center mb-12">Our Streamlined Workflow</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { icon: FileText, title: "Order Placement", description: "Hospital staff provides detailed food order information for each patient." },
+              { icon: ChefHat, title: "Pantry Preparation", description: "Our pantry receives the orders and prepares meals according to specifications." },
+              { icon: TruckDelivery, title: "Timely Delivery", description: "Dedicated delivery personnel ensure meals reach patients promptly and safely." }
+            ].map((step, index) => (
+              <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow relative">
+                <step.icon className="w-16 h-16 text-emerald-500 mb-6" />
+                <h3 className="text-xl font-semibold mb-4 text-gray-700">{step.title}</h3>
+                <p className="text-gray-600">
+                  {step.description}
+                </p>
+                {index < 2 && (
+                  <ArrowRight className="absolute top-1/2 -right-8 w-8 h-8 text-emerald-500 transform -translate-y-1/2 hidden md:block" />
+                )}
               </div>
             ))}
           </div>
@@ -107,7 +132,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
-              <h2 className="text-3xl md:text-4xl font-bold">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-700">
                 Revolutionizing Hospital Food Service
               </h2>
               <p className="text-xl text-gray-600">
@@ -116,11 +141,11 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex items-center space-x-3">
                   <Users className="w-8 h-8 text-emerald-500" />
-                  <span className="font-medium">Multi-user Platform</span>
+                  <span className="font-medium text-gray-700">Multi-user Platform</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <ClipboardList className="w-8 h-8 text-emerald-500" />
-                  <span className="font-medium">Customizable Diet Charts</span>
+                  <span className="font-medium text-gray-700">Customizable Diet Charts</span>
                 </div>
               </div>
               <Button className="bg-emerald-500 hover:bg-emerald-600 transition-colors">
@@ -135,39 +160,6 @@ export default function Home() {
                 className="object-cover rounded-xl shadow-2xl"
               />
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="testimonial" className="py-20 bg-white font-[Manjari]">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What Our Clients Say</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((testimonial) => (
-              <div key={testimonial} className="bg-gray-50 rounded-xl overflow-hidden shadow-lg p-8 transition-all hover:shadow-xl hover:-translate-y-1">
-                <div className="flex items-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-6">
-                  NutriCare has significantly improved our food service efficiency <br /> Patient satisfaction has increased and our staff finds it easy to use
-                </p>
-                <div className="flex items-center">
-                  <Image
-                    src="/placeholder.svg"
-                    alt="John"
-                    width={48}
-                    height={48}
-                    className="rounded-full mr-4"
-                  />
-                  <div>
-                    <h4 className="font-semibold">John Doe</h4>
-                    <p className="text-sm text-gray-500">Hospital Administrator</p>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
