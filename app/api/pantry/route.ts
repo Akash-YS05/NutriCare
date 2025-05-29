@@ -1,14 +1,9 @@
-
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: `Method ${req.method} not allowed` });
-  }
-
+export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const meals = await prisma.mealDelivery.findMany({
       include: {
@@ -20,9 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       orderBy: { scheduledFor: 'asc' },
     });
 
-    return res.status(200).json(meals);
+    return NextResponse.json(meals);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    NextResponse.json({ error: 'Internal Server Error' });
   }
 }

@@ -1,10 +1,9 @@
-// pages/api/patients/route.ts
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   if (req.method === 'GET') {
     try {
       const patients = await prisma.patient.findMany({
@@ -16,12 +15,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         },
       });
-      return res.status(200).json({ patients });
+      return NextResponse.json({ patients });
     } catch (error) {
       console.error('Error fetching patients:', error);
-      return res.status(500).json({ error: 'Error fetching patients' });
+      return NextResponse.json({ error: 'Error fetching patients' });
     }
   }
 
-  return res.status(405).json({ error: 'Method Not Allowed' });
+  return NextResponse.json({ error: 'Method Not Allowed' });
 }

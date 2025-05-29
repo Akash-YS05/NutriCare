@@ -1,5 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+
 interface MealPlan {
   mealType: string;
   ingredients: string[];
@@ -12,26 +13,24 @@ interface DietChart {
   mealPlans: MealPlan[];
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
+export async function POST(req: NextRequest) {
   try {
+    const body = await req.json();
+
     const patient = await prisma.patient.create({
       data: {
-        name: req.body.name,
-        age: parseInt(req.body.age),
-        gender: req.body.gender,
-        floorNumber: req.body.floorNumber,
-        roomNumber: req.body.roomNumber,
-        bedNumber: req.body.bedNumber,
-        contactInfo: req.body.contactInfo,
-        emergencyContact: req.body.emergencyContact,
-        diseases: req.body.diseases || [],
-        allergies: req.body.allergies || [],
+        name: body.name,
+        age: parseInt(body.age),
+        gender: body.gender,
+        floorNumber: body.floorNumber,
+        roomNumber: body.roomNumber,
+        bedNumber: body.bedNumber,
+        contactInfo: body.contactInfo,
+        emergencyContact: body.emergencyContact,
+        diseases: body.diseases || [],
+        allergies: body.allergies || [],
         dietCharts: {
-          create: req.body.dietCharts.map((chart: DietChart) => ({
+          create: body.dietCharts.map((chart: DietChart) => ({
             startDate: new Date(chart.startDate),
             endDate: chart.endDate ? new Date(chart.endDate) : null,
             mealPlans: {
@@ -53,20 +52,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
 
-    return res.status(200).json({ patient });
+    return NextResponse.json({ patient });
   } catch (error) {
     console.error("Error creating patient:", error);
-    return res.status(500).json({ error: "Error creating patient" });
+    return NextResponse.json({ error: "Error creating patient" }, { status: 500 });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
