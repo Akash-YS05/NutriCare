@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
+const JWT_SECRET = process.env.JWT_SECRET || "test-secret-key";
 
 export default async function handler(
     req: NextApiRequest,
@@ -18,7 +18,7 @@ export default async function handler(
     const { email, password, name, contactInfo, role } = req.body;
 
     if (!email || !password || !contactInfo || !role) {
-    return res.status(400).json({ error: 'Email, password, contactInfo, and role are required' });
+    return res.status(400).json({ error: 'Email, password, contact info, and role are required' });
   }
 
     try {
