@@ -23,7 +23,6 @@ export default function PantryDashboard() {
 
   const fetchMeals = async () => {
     try {
-      setLoading(true);
       const response = await axios.get('/api/pantry');
       setMeals(response.data);
     } catch (err) {
@@ -37,7 +36,6 @@ export default function PantryDashboard() {
     fetchMeals();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
   return (
@@ -49,6 +47,9 @@ export default function PantryDashboard() {
         <hr />
         <br />
 
+        {loading ? (
+          <div className="mt-6 text-lg text-gray-600">Loading...</div>
+        ) : (
         <table className="w-full table-auto border-collapse border border-gray-200">
             <thead>
             <tr className="bg-gray-100">
@@ -89,8 +90,8 @@ export default function PantryDashboard() {
                 </tr>
             ))}
             </tbody>
-        </table>
-        <Button size='lg' className='my-4'><a href="/pantry">Check Pantry Status</a></Button>
+            <Button size='lg' className='my-4'><a href="/pantry">Check Pantry Status</a></Button>
+        </table>)}
         </div>
     </div>
   );

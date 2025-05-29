@@ -52,9 +52,9 @@ export default function DeliveriesPage() {
     try {
       const response = await axios.get('/api/meal-deliveries');
       setPatients(response.data);
-      setLoading(false);
     } catch (err) {
       setError(err+'Failed to fetch data');
+    } finally {
       setLoading(false);
     }
   };
@@ -82,22 +82,23 @@ export default function DeliveriesPage() {
     }
   };
 
-  if (loading) return <div className="text-center text-xl font-semibold text-gray-600">Loading...</div>;
   if (error) return <div className="text-center text-xl font-semibold text-red-600">{error}</div>;
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-50 text-black">
 
       <Sidebar/>
 
-      <div className="container mx-auto p-6 ml-20 md:ml-64">
+      <div className="bg-white container mx-auto p-6 ml-20 md:ml-64">
         <h1 className="text-3xl font-bold mb-6">Pantry Dashboard</h1>
         <p>See assigned meal details, with tailored ingredients, instructions carefully set with details about allergies, if any. <br />Update the status of every meal in real time.</p>
 
         <hr />
         <br />
-
-        {patients.map((patient) => (
+        {loading ? (
+          <div className="mt-6 text-lg text-gray-600">Loading...</div>
+        ) : (
+        patients.map((patient) => (
           <div key={patient.id} className="bg-white p-6 mb-6 rounded-lg shadow-md hover:shadow-xl transition-all">
             <div className="border-b pb-4 mb-4">
               <h2 className="text-2xl font-semibold text-gray-800">{patient.name}</h2>
@@ -132,7 +133,7 @@ export default function DeliveriesPage() {
                           <select
                             value={delivery.status}
                             onChange={(e) => updateDeliveryStatus(delivery.id, e.target.value)}
-                            className="border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                            className="border p-2 rounded-md bg-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                             disabled={delivery.status === 'DELIVERED' || delivery.status === 'CANCELLED'}
                           >
                             <option value="PENDING">Pending</option>
@@ -150,7 +151,7 @@ export default function DeliveriesPage() {
               </div>
             ))}
           </div>
-        ))}
+        )))}
       </div>
     </div>
   );

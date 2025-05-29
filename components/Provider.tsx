@@ -12,7 +12,7 @@ export default function Provider({
   return (
     <SessionProvider>
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-        <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+        <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
           {children}
         </div>
       </ThemeProvider>

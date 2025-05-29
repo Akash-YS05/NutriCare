@@ -11,3 +11,7 @@ body {
   width: 100%;
 }
 
+input, select, textarea {
+  @apply bg-gray-50 text-gray-600;
+}
+

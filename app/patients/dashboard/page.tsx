@@ -1,4 +1,3 @@
-// pages/dashboard/patient-diet.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -471,14 +470,14 @@ const PatientDietDashboard = () => {
 
                   {patient.dietCharts.map((chart) => (
                     <div key={chart.id} className="mt-4 border-t pt-4">
-                      <h3 className="text-lg font-bold">Diet Chart</h3>
+                      <h3 className="text-lg font-bold text-gray-600">Diet Chart</h3>
                       <p className="text-sm text-gray-600">
                         Start Date: {new Date(chart.startDate).toLocaleDateString()} | 
                         End Date: {chart.endDate ? new Date(chart.endDate).toLocaleDateString() : "Ongoing"}
                       </p>
                       <div className="mt-2 space-y-2">
                         {chart.mealPlans.map((meal) => (
-                          <div key={meal.id} className="ml-4 p-2 bg-gray-50 rounded-md">
+                          <div key={meal.id} className="ml-4 p-2 bg-gray-50 text-gray-700 rounded-md">
                             <p className="font-semibold">{meal.mealType}</p>
                             <p className="text-sm">Ingredients: {meal.ingredients.join(", ")}</p>
                             <p className="text-sm">Instructions: {meal.instructions.join(", ")}</p>

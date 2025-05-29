@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { FaHome, FaUser, FaSignOutAlt } from 'react-icons/fa';
-import { Utensils } from 'lucide-react';
+import { ForkKnife, Home, LogOut, ShoppingCart, User, Utensils } from 'lucide-react';
 
 export const Sidebar = () => {
   return (
@@ -16,13 +15,19 @@ export const Sidebar = () => {
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-4 space-y-2">
-        <SidebarNavItem href="/dashboard" icon={FaHome}>
+        <SidebarNavItem href="/dashboard" icon={Home}>
           Dashboard
         </SidebarNavItem>
-        <SidebarNavItem href="/patients/dashboard" icon={FaUser}>
+        <SidebarNavItem href="/patients/dashboard" icon={User}>
           Patients
         </SidebarNavItem>
-        <SidebarNavItem href="/logout" icon={FaSignOutAlt}>
+        <SidebarNavItem href="/patients/dashboard" icon={ForkKnife}>
+          Meal Plans
+        </SidebarNavItem>
+        <SidebarNavItem href="/patients/dashboard" icon={ShoppingCart}>
+          Pantry Status
+        </SidebarNavItem>
+        <SidebarNavItem href="/logout" icon={LogOut}>
           Logout
         </SidebarNavItem>
       </nav>
