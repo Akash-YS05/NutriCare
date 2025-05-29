@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   if (req.method === 'GET') {
     try {
       const patients = await prisma.patient.findMany({

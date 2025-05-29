@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const patientsWithMealPlans = await prisma.patient.findMany({
       include: {
         dietCharts: {
-          include: {
+          include: { 
             mealPlans: {
               include: {
                 mealDeliveries: true,
