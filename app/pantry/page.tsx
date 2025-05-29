@@ -50,7 +50,7 @@ export default function DeliveriesPage() {
 
   const fetchPatientsWithMealPlans = async () => {
     try {
-      const response = await axios.get('/api/meal-deliveries/route');
+      const response = await axios.get('/api/meal-deliveries');
       setPatients(response.data);
       setLoading(false);
     } catch (err) {
@@ -61,7 +61,7 @@ export default function DeliveriesPage() {
 
   const updateDeliveryStatus = async (deliveryId: string, status: string) => {
     try {
-      const response = await axios.put('/api/meal-deliveries/route', { deliveryId, status });
+      const response = await axios.put('/api/meal-deliveries', { deliveryId, status });
       setPatients((prevPatients) =>
         prevPatients.map((patient) => ({
           ...patient,

@@ -5,6 +5,7 @@ import {Sidebar} from '@/components/ui/Sidebar'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import Provider from '@/components/Provider'
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default async function RootLayout({
             {session && <Sidebar />}
             <main className="flex-1 overflow-y-auto">
               {children}
+              <Analytics/>
             </main>
           </div>
         </Provider>

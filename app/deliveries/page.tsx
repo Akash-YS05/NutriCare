@@ -24,7 +24,7 @@ export default function PantryDashboard() {
   const fetchMeals = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/pantry/route');
+      const response = await axios.get('/api/pantry');
       setMeals(response.data);
     } catch (err) {
       setError(err+'Failed to fetch meals');

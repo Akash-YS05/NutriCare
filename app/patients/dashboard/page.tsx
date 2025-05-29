@@ -74,7 +74,7 @@ const PatientDietDashboard = () => {
 
   const fetchPatients = async () => {
     try {
-      const response = await axios.get("/api/patients/route");
+      const response = await axios.get("/api/patients");
       setPatients(response.data.patients);
     } catch (error) {
       console.error("Error fetching patients:", error);
@@ -163,7 +163,7 @@ const PatientDietDashboard = () => {
         throw new Error("Please fill in all required fields");
       }
 
-      const response = await axios.post("/api/patients/add/route", newPatient);
+      const response = await axios.post("/api/patients/add", newPatient);
       setPatients((prev) => [...prev, response.data.patient]);
       setShowForm(false);
       
