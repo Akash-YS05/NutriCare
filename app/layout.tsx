@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import Provider from '@/components/Provider'
 import { Analytics } from "@vercel/analytics/next"
+import { Toaster } from "react-hot-toast"
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default async function RootLayout({
             {session && <Sidebar />}
             <main className="flex-1 overflow-y-auto">
               {children}
+              <Toaster position="top-right" reverseOrder={false} />
               <Analytics/>
             </main>
           </div>

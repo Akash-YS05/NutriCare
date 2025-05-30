@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Utensils } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -16,26 +17,45 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
-
+  
     try {
       const res = await axios.post('/api/auth/login', { email, password });
-
+      console.log('[Login Response]', res);
+  
       const { token, user } = res.data;
-
+  
+      if (!user) {
+        setError('Login failed: No user data received.');
+        return;
+      }
+  
       localStorage.setItem('token', token);
-
-      alert(`Welcome, ${user.email}!`);
-      router.push('/dashboard'); 
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        setError(error.response?.data?.error || 'Login failed');
-        console.error('Axios error:', error.response?.data); 
+      toast.success(`Welcome, ${user.email}`);
+      router.push('/dashboard');
+    } catch (err) {
+      console.error('[Login Error]', err);
+  
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          const status = err.response.status;
+          if (status === 401) {
+            setError('Incorrect email or password.');
+          } else if (status === 400) {
+            setError('Invalid request. Please check your input.');
+          } else {
+            setError(`Login failed with status ${status}. Please try again.`);
+          }
+        } else if (err.request) {
+          setError('No response from server. Please check your network.');
+        } else {
+          setError('An error occurred during login. Please try again.');
+        }
       } else {
-        setError('Something went wrong');
-        console.error('Unexpected error:', error); 
+        setError('Unexpected error occurred. Please try again.');
       }
     }
   };
+  
 
   return (
     <div className="bg-white">
@@ -44,7 +64,6 @@ export default function LoginPage() {
         <span className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-emerald-500 text-transparent bg-clip-text">NutriCare</span>
       </Link>
       <div className="min-h-screen flex">
-        {/* Left Section: Image */}
         <div className="hidden md:block md:w-3/5 items-center justify-center bg-white">
           <div className="relative w-3/4 h-5/6">
             <Image
@@ -57,7 +76,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Right Section: Form */}
         <div className="w-full md:w-2/5 flex items-center justify-center bg-white px-10 border-l border-slate-300">
           <div className="max-w-md w-full space-y-8">
             <div>

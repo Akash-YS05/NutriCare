@@ -21,18 +21,17 @@ export const Sidebar = () => {
         <SidebarNavItem href="/patients/dashboard" icon={User}>
           Patients
         </SidebarNavItem>
-        <SidebarNavItem href="/patients/dashboard" icon={ForkKnife}>
+        <SidebarNavItem href="/patients/deliveries" icon={ForkKnife}>
           Meal Plans
         </SidebarNavItem>
-        <SidebarNavItem href="/patients/dashboard" icon={ShoppingCart}>
+        <SidebarNavItem href="/patients/pantry" icon={ShoppingCart}>
           Pantry Status
         </SidebarNavItem>
-        <SidebarNavItem href="/logout" icon={LogOut}>
+        <SidebarNavItem href="/" icon={LogOut}>
           Logout
         </SidebarNavItem>
       </nav>
 
-      {/* Footer */}
       <div className="p-4 border-t border-gray-700">
         <p className="text-sm text-gray-400">&copy; 2025 NutriCare</p>
       </div>

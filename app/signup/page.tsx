@@ -7,6 +7,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Utensils } from "lucide-react"
 import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 enum Role {
   MANAGER = "MANAGER",
@@ -35,12 +36,12 @@ export default function SignupPage() {
     try {
       const res = await axios.post("/api/auth/signup", { email, password, name, contactInfo, role })
 
-      const { token, user } = res.data
+      const { token } = res.data
 
       localStorage.setItem("token", token)
 
-      alert(`Welcome, ${user.name}!`)
-      router.push("/dashboard")
+      toast.success("Signup Succesful!")
+      router.push("/login")
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data?.error || "Signup failed")

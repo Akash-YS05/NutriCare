@@ -1,44 +1,45 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+export async function POST(
+  req: NextRequest,
 ) {
+
+  
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: `Method ${req.method} not allowed` });
+    return NextResponse.json({ error: `Method ${req.method} not allowed` });
   }
 
-  const { email, password } = req.body;
+  const { email, password } = await req.json();
 
   if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
+    return NextResponse.json({ error: 'Email and password are required' });
   }
 
   try {
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return NextResponse.json({ error: 'Invalid email or password' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return NextResponse.json({ error: 'Invalid email or password' });
     }
 
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       JWT_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '7D' }
     );
 
-    return res.status(200).json({
+    return NextResponse.json({
       token,
       user: {
         id: user.id,
@@ -48,6 +49,6 @@ export default async function handler(
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    return NextResponse.json({ error: 'Internal Server Error' });
   }
 }
