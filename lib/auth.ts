@@ -7,7 +7,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
-    debug: true, // nextAuth's debug feature
+    debug: true, 
     providers: [
         CredentialsProvider({
             name: "Credentials",

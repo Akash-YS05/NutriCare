@@ -13,7 +13,6 @@ export const Sidebar = () => {
         </Link>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 px-4 py-4 space-y-2">
         <SidebarNavItem href="/dashboard" icon={Home}>
           Dashboard
@@ -21,10 +20,10 @@ export const Sidebar = () => {
         <SidebarNavItem href="/patients/dashboard" icon={User}>
           Patients
         </SidebarNavItem>
-        <SidebarNavItem href="/patients/deliveries" icon={ForkKnife}>
+        <SidebarNavItem href="/deliveries" icon={ForkKnife}>
           Meal Plans
         </SidebarNavItem>
-        <SidebarNavItem href="/patients/pantry" icon={ShoppingCart}>
+        <SidebarNavItem href="/pantry" icon={ShoppingCart}>
           Pantry Status
         </SidebarNavItem>
         <SidebarNavItem href="/" icon={LogOut}>
